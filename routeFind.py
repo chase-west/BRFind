@@ -5,13 +5,14 @@ import networkx as nx
 import osmnx as ox
 import geopandas as gpd
 from shapely.geometry import Point, MultiPolygon, mapping, LineString
-from shapely.ops import unary_union
+from shapely.ops import unary_union, nearest_points
 import numpy as np
 from sklearn.cluster import KMeans
 import folium
 
 def get_school_coordinates(school_name, city="Reno", state="NV"):
     """Get coordinates for a school using Nominatim geocoding"""
+    """Replace city and state with your city and state"""
     geolocator = Nominatim(user_agent="school_route_planner")
     geocode = RateLimiter(geolocator.geocode, min_delay_seconds=1)
     
@@ -232,8 +233,7 @@ for school_idx, school in enumerate(school_locations):
         
         if not needs_bus_area.is_empty:
             # Place bus stops in areas that need them
-            stops = place_bus_stops(needs_bus_area)
-            
+            stops = place_bus_stops(needs_bus_area, G_drive)           
             if len(stops) > 0:
                 # Find nearest nodes for stops
                 stop_nodes = [ox.distance.nearest_nodes(G_drive, lon, lat) for lat, lon in stops]
