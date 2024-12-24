@@ -69,7 +69,7 @@ def get_walking_distance_areas(G_walk, school_node, zone_geometry, max_walk_time
     
     return needs_bus
 
-def place_safe_bus_stops(needs_bus_area, G_drive, num_points=20, min_distance_between_stops=200):
+def place_bus_stops(needs_bus_area, G_drive, num_points=20, min_distance_between_stops=200):
     """
     Place bus stops in safe, accessible locations along roads
     
